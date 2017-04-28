@@ -113,7 +113,7 @@ for(var page in pages) {
 })
 }
     // 需要生成几个html文件，就配置几个HtmlWebpackPlugin对象
-    module.exports.plugins.push(new HtmlWebpackPlugin(conf))
+  webpackConfig.plugins.push(new HtmlWebpackPlugin(conf))
 }
 if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
