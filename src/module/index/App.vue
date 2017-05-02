@@ -3,7 +3,6 @@
 </template>
 
 <script>
-  import "normalize.css/normalize.css";
   import vindex from '../../components/index/Index'
 
   export default {
@@ -17,5 +16,5 @@
 </script>
 
 <style>
-h1{font-size: 100px;}
+h1{font-size: 30px;}
 </style>

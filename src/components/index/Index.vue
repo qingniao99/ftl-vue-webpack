@@ -7,5 +7,6 @@
 <style scoped>
 	h1{
 		color: rgb(5, 110, 234);
+    font-size: 50px;
 	}
 </style>
