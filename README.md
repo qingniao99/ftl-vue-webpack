@@ -3,6 +3,7 @@
 > A Vue.js multi-page project which use ftl
 
 ## if you want use pure html, look [here](https://github.com/jarvan4dev/vue-multi-page)
+## if you are using vux ,please checkout to vux branch
 
 ## Build Setup
 
