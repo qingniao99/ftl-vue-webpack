@@ -1,6 +1,6 @@
 # ftl-vue-webpack
 
-> A Vue.js multi-page project which use ftl
+> A Vue.js multi-page project which use ftl/express and support mock-refresh
 
 ## if you want use pure html, look [here](https://github.com/jarvan4dev/vue-multi-page)
 ## if you are using vux ,please checkout to vux branch
@@ -11,8 +11,11 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost which is no self-mock
 npm run dev
+
+# if you want to mock yourself,please fire follow after 'dev'
+npm run post-dev
 
 # build for production with minification
 npm run build
