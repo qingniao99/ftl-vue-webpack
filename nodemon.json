@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": ["src/*","dist/*","config/*","bulid/*","node_modules/*"]
+}

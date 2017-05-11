@@ -11,6 +11,8 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
+var mode = require('yargs').argv.mode;
+
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -29,24 +31,59 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 })
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: () => {}
+  log: () => {
+  }
 })
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' })
+    hotMiddleware.publish({action: 'reload'})
     cb()
   })
 })
 
 // proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = { target: options }
+//mock
+if (mode === "kaifa") {
+  proxyTable = {
+    '/credit': {
+      target: 'http://kaifa.163.com', // target host
+      changeOrigin: true               // needed for virtual hosted sites
+    }
+  };
+  // proxy api requests
+  Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context]
+    if (typeof options === 'string') {
+      options = {target: options}
+    }
+    app.use(proxyMiddleware(options.filter || context, options))
+  })
+} else if (mode === "ceshi") {
+  proxyTable = {
+    '/credit': {
+      target: 'http://ceshi.example.org', // target host
+      changeOrigin: true               // needed for virtual hosted sites
+    }
   }
-  app.use(proxyMiddleware(options.filter || context, options))
-})
+  // proxy api requests
+  Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context]
+    if (typeof options === 'string') {
+      options = {target: options}
+    }
+    app.use(proxyMiddleware(options.filter || context, options))
+  })
+} else {
+  Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context]
+    if (typeof options === 'string') {
+      options = {target: options}
+    }
+    app.use(proxyMiddleware(options.filter || context, options))
+  })
+}
+
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -60,6 +97,7 @@ app.use(hotMiddleware)
 
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+
 app.use(staticPath, express.static('./static'))
 
 var uri = 'http://localhost:' + port
@@ -74,7 +112,9 @@ devMiddleware.waitUntilValid(() => {
   console.log('> Listening at ' + uri + '\n')
   // when env is testing, don't need open it
   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
-    opn(uri)
+    if (mode === "kaifa" || mode === "ceshi") {
+      opn(uri)
+    }
   }
   _resolve()
 })
