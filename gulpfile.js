@@ -17,8 +17,8 @@ gulp.task('ftl', function () {
     .pipe(gulp.dest("src/ftl/dest"));
 });
 
-gulp.task('ftl2html', function () {
-  glob("src/ftl/dest/*.html", {}, function (er, files) {
+gulp.task('ftl2html', ['ftl'],function () {
+  glob("src/ftl/dest/*.html", {}, function (err, files) {
     files.map(function (v,i) {
       var basename = path.basename(v,".html");
       var htmlstring = fs.readFileSync(v);
@@ -26,6 +26,11 @@ gulp.task('ftl2html', function () {
     })
   })
 });
+
+gulp.task('build',function () {
+  console.log('you can do build!')
+})
+
 // browser-sync配置，配置里启动nodemon任务
 gulp.task('browser-sync', ['nodemon'], function() {
   bs.init(null, {

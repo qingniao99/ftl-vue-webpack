@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>index</title>
   <script type="text/javascript">
-    var sss={d:true,e:'5678',s:999};
+    var sss=${name};
     console.log(sss);
   </script>
 </head>
