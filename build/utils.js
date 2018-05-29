@@ -22,7 +22,7 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     var loaders = [cssLoader]
     if (loader) {
       loaders.push({
@@ -50,7 +50,7 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {indentedSyntax: true}),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
@@ -71,11 +71,13 @@ exports.styleLoaders = function (options) {
   return output
 }
 exports.getEntries = function (globPath) {
-    var entries = {}
-    glob.sync(globPath).forEach(function (entry) {
-        var tmp = entry.split('/').splice(-3)
-        var moduleName = tmp.slice(1, 2);
-        entries[moduleName] = entry
-    });
-    return entries;
+  var entries = {}
+  glob.sync(globPath).forEach(function (entry) {
+    console.log(entry.split('/'))
+    var tmp = entry.split('/').splice(-3)
+    console.log(tmp)
+    var moduleName = tmp.slice(1, 2);
+    entries[moduleName] = entry
+  });
+  return entries;
 }

@@ -4,6 +4,6 @@ import App from './App'
 
 new Vue({
   el: '#body',
-  template:"<App />",
-  components: { App }
+  template: "<App />",
+  components: {App}
 })
