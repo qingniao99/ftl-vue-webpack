@@ -25,7 +25,7 @@
     created () {
 
     },
-    computed(){
+    computed:{
 
     }
   }

@@ -8,50 +8,55 @@ var bs = require('browser-sync').create();
 var ROOT = path.resolve(__dirname);
 var server = path.resolve(ROOT, 'mock');
 
-gulp.task('ftl', function () {
+gulp.task('ftl2html', function () {
   gulp.src("src/ftl/mock/*.json")
     .pipe(freemarker({
       viewRoot: path.resolve(__dirname, "./src/ftl/src"),
       options: {}
     }))
-    .pipe(gulp.dest("src/ftl/dest"));
-});
-
-gulp.task('ftl2html', ['ftl'],function () {
-  glob("src/ftl/dest/*.html", {}, function (err, files) {
-    files.map(function (v,i) {
-      var basename = path.basename(v,".html");
-      var htmlstring = fs.readFileSync(v);
-      fs.writeFileSync(path.join(__dirname,"src/module/",basename,"/"+basename+".html"), htmlstring);
+    .pipe(gulp.dest("src/ftl/dest")).on('end',function () {
+    glob("src/ftl/dest/*.html", {}, function (err, files) {
+      files.map(function (v, i) {
+        var basename = path.basename(v, ".html");
+        var htmlstring = fs.readFileSync(v);
+        fs.unlinkSync(path.join(__dirname, "src/module/", basename, "/" + basename + ".html"));
+        fs.writeFileSync(path.join(__dirname, "src/module/", basename, "/" + basename + ".html"), htmlstring);
+      })
     })
-  })
+  });
 });
 
-gulp.task('build',function () {
+gulp.task('watchftl', function () {
+  gulp.watch(['src/ftl/mock/*.json', 'src/ftl/src/*.ftl']).on('change', function (file) {
+    gulp.start('ftl2html');
+  })
+})
+
+gulp.task('build', function () {
   console.log('you can do build!')
 })
 
 // browser-sync配置，配置里启动nodemon任务
-gulp.task('browser-sync', ['nodemon'], function() {
+gulp.task('browser-sync', ['nodemon'], function () {
   bs.init(null, {
     proxy: "http://localhost:80",
     port: 8082
   });
 });
 // browser-sync 监听文件
-gulp.task('mock', ['browser-sync'], function() {
+gulp.task('mock', ['browser-sync'], function () {
   gulp.watch(['./mock/router.js', './mock/**'], ['bs-delay']);
 });
 // 延时刷新
-gulp.task('bs-delay', function() {
-  setTimeout(function() {
+gulp.task('bs-delay', function () {
+  setTimeout(function () {
     bs.reload();
     console.log('重启完毕!');
   }, 2000);
 });
 
 // 服务器重启
-gulp.task('nodemon', function(cb) {
+gulp.task('nodemon', function (cb) {
   // 设个变量来防止重复重启
   var started = false;
   var stream = nodemon({
@@ -66,12 +71,12 @@ gulp.task('nodemon', function(cb) {
       server
     ]
   });
-  stream.on('start', function() {
+  stream.on('start', function () {
     if (!started) {
       cb();
       started = true;
     }
-  }).on('crash', function() {
+  }).on('crash', function () {
     console.error('Application has crashed!\n')
     stream.emit('restart', 10)  // restart the server in 10 seconds
   })

@@ -5,9 +5,9 @@
   "author": "hzhuangjianqiang <hzhuangjianqiang@corp.netease.com>",
   "private": true,
   "scripts": {
-    "pre-dev": "gulp ftl2html",
-    "dev": "node build/dev-server.js",
-    "post-dev": "gulp mock",
+    "dev": "gulp ftl2html && node build/dev-server.js",
+    "dev-mock": "gulp mock",
+    "ftl-mock": "gulp watchftl",
     "dev-kaifa": "node build/dev-server.js --mode=kaifa",
     "dev-ceshi": "node build/dev-server.js --mode=ceshi",
     "build": "node build/build.js && gulp build"

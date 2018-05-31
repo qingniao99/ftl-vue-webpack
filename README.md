@@ -1,8 +1,8 @@
 # ftl-vue-webpack
 
-> A Vue.js multi-page project which can support transform ftl and support mock-refresh.
+> A Vue.js multi-page && spa project which can support transform ftl and support mock-refresh automatically.
 
-## if you want use pure html, look [here](https://github.com/jarvan4dev/vue-multi-page)
+## if you want use simple pure html, look [here](https://github.com/jarvan4dev/vue-multi-page)
 
 ## Build Setup
 
@@ -14,7 +14,10 @@ npm install
 npm run dev
 
 # if you want to mock yourself,please fire follow after 'dev'
-npm run post-dev
+npm run dev-mock
+
+# if you want to mock ftl,please fire follow after 'dev'
+npm run ftl-mock
 
 # build for production with minification
 npm run build

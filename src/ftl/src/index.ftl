@@ -6,6 +6,7 @@
   <script type="text/javascript">
     var sss=${name};
     console.log(sss);
+    alert(sss.s);
   </script>
 </head>
 <body>

@@ -73,9 +73,7 @@ exports.styleLoaders = function (options) {
 exports.getEntries = function (globPath) {
   var entries = {}
   glob.sync(globPath).forEach(function (entry) {
-    console.log(entry.split('/'))
     var tmp = entry.split('/').splice(-3)
-    console.log(tmp)
     var moduleName = tmp.slice(1, 2);
     entries[moduleName] = entry
   });
