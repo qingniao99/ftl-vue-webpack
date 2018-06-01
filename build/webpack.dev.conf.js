@@ -13,6 +13,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 })
 
 module.exports = merge(baseWebpackConfig, {
+  mode: 'development',
   module: {
     rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
   },
@@ -28,7 +29,13 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new FriendlyErrorsPlugin()
-  ]
+  ],
+  optimization: {
+    runtimeChunk: false,
+    minimize: false,
+    noEmitOnErrors: true,
+    splitChunks: false,
+  },
 })
 var pages = utils.getEntries('./src/module/**/*.html')
 for (var page in pages) {
